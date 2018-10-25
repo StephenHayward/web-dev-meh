@@ -56,6 +56,7 @@
     <TypeScriptSourceRoot />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -67,15 +68,16 @@
     <Content Include="app.css" />
     <Content Include="images\block64.png" />
     <Content Include="index.html" />
-    <Content Include="phaser.js" />
-    <Content Include="phaser.min.js" />
+    <Content Include="lib\phaser.js" />
+    <Content Include="lib\phaser.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="MenuScene.ts" />
-    <TypeScriptCompile Include="phaser.d.ts" />
-    <TypeScriptCompile Include="SceneMain.ts" />
+    <TypeScriptCompile Include="src\Game.ts" />
+    <TypeScriptCompile Include="src\MenuScene.ts" />
+    <TypeScriptCompile Include="lib\phaser.d.ts" />
+    <TypeScriptCompile Include="src\SceneMain.ts" />
+    <TypeScriptCompile Include="src\Sprite.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

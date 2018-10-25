@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "system",
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "outFile": "bin/game.js",
+    "outDir": "build/",
+    "sourceMap": true
+  },
+  "include": [
+    "src/**/*",
+    "lib/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}

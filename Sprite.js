@@ -13,22 +13,22 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var TimeWaster;
 (function (TimeWaster) {
-    var Game = /** @class */ (function (_super) {
-        __extends(Game, _super);
-        function Game() {
-            var _this = this;
-            var config = {
-                type: Phaser.AUTO,
-                width: 480,
-                height: 640,
-                parent: 'content',
-                scene: [TimeWaster.MenuScene, SceneMain]
-            };
-            _this = _super.call(this, config) || this;
+    var Player = /** @class */ (function (_super) {
+        __extends(Player, _super);
+        function Player(scene, x, y, texture, frame) {
+            var _this = _super.call(this, scene, x, y, texture, frame) || this;
+            _this.speed = 5;
+            scene.children.add(_this);
             return _this;
         }
-        return Game;
-    }(Phaser.Game));
-    TimeWaster.Game = Game;
+        Player.prototype.update = function (time) {
+            this.MoveUp(time);
+        };
+        Player.prototype.MoveUp = function (time) {
+            this.y = this.y * this.speed * time;
+        };
+        return Player;
+    }(Phaser.GameObjects.Sprite));
+    TimeWaster.Player = Player;
 })(TimeWaster || (TimeWaster = {}));
-//# sourceMappingURL=app.js.map
+//# sourceMappingURL=Sprite.js.map

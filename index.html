@@ -6,15 +6,20 @@
     <title>TypeScript HTML App</title>
     <link rel="stylesheet" href="app.css" type="text/css" />
 
-    <script src="phaser.js"></script>
-    <script src="MenuScene.js"></script>
-    <script src="SceneMain.js"></script>
-    <script src="app.js"></script>
-
+    <script src="lib/phaser.min.js"></script>
+    <script src="bin/game.js"></script>
 </head>
 <body>
     <h1>TypeScript HTML App</h1>
 
     <div id="content"></div>
+
+    <script>
+
+        window.onload = () => {
+            var game = new TimeWaster.Game();
+        };
+
+    </script>
 </body>
 </html>
