@@ -8,7 +8,7 @@
 
     export class MenuScene extends Phaser.Scene {
 
-        //player: Player;
+        player: Player;
 
         constructor() {
             super({
@@ -17,7 +17,7 @@
         }
 
         preload() {
-            //this.load.image("greenBlock", "images/block64.png");
+            this.load.image("greenBlock", "images/block64.png");
         }
 
         create() {
@@ -25,17 +25,11 @@
 
             //var gameConfig = this.game.config;
 
-            //this.player = new Player(this, 50, 50, "greenBlock");
-
-            //var greenBlock = this.add.image(0, 0, "greenBlock");
-            //greenBlock.scaleX = 2;
-            //greenBlock.scaleY = 2;
-            //greenBlock.x = ;
-            //greenBlock.y = ;
+            this.player = new Player(this, 50, 50, "greenBlock");
         }
 
-        update() {
-
+        update(time, delta) {
+            this.player.MoveUp(delta);
         }
     }
 

@@ -9,7 +9,7 @@
         }
 
         preload() {
-            //this.load.image("greenBlock", "images/block64.png");
+            this.load.image("greenBlock", "images/block64.png");
         }
 
         create() {

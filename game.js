@@ -25,14 +25,6 @@ var TimeWaster;
                 parent: 'content',
                 scene: [TimeWaster.MenuScene, TimeWaster.SceneMain]
             };
-            var preload = function () {
-            };
-            var create = function () {
-            };
-            var update = function () {
-            };
-            // { preload: preload, create:create, update:update }
-            // 
             _this = _super.call(this, config) || this;
             return _this;
         }
@@ -51,30 +43,52 @@ var TimeWaster;
     TimeWaster.TestClass = TestClass;
     var MenuScene = /** @class */ (function (_super) {
         __extends(MenuScene, _super);
-        //player: Player;
         function MenuScene() {
             return _super.call(this, {
                 key: 'MenuScene'
             }) || this;
         }
         MenuScene.prototype.preload = function () {
-            //this.load.image("greenBlock", "images/block64.png");
+            this.load.image("greenBlock", "images/block64.png");
         };
         MenuScene.prototype.create = function () {
             console.log("Ready!");
             //var gameConfig = this.game.config;
-            //this.player = new Player(this, 50, 50, "greenBlock");
+            this.player = new TimeWaster.Player(this, 50, 50, "greenBlock");
             //var greenBlock = this.add.image(0, 0, "greenBlock");
             //greenBlock.scaleX = 2;
             //greenBlock.scaleY = 2;
             //greenBlock.x = ;
             //greenBlock.y = ;
         };
-        MenuScene.prototype.update = function () {
+        MenuScene.prototype.update = function (time, delta) {
+            this.player.MoveUp(delta);
         };
         return MenuScene;
     }(Phaser.Scene));
     TimeWaster.MenuScene = MenuScene;
+})(TimeWaster || (TimeWaster = {}));
+var TimeWaster;
+(function (TimeWaster) {
+    var Player = /** @class */ (function (_super) {
+        __extends(Player, _super);
+        function Player(scene, x, y, texture, frame) {
+            var _this = _super.call(this, scene, x, y, texture, frame) || this;
+            _this.speed = 0.005;
+            // Add the object to the scene
+            scene.children.add(_this);
+            return _this;
+        }
+        Player.prototype.update = function (time) {
+            this.MoveUp(time);
+        };
+        Player.prototype.MoveUp = function (time) {
+            this.y += this.speed * time;
+            console.log(this.y);
+        };
+        return Player;
+    }(Phaser.GameObjects.Sprite));
+    TimeWaster.Player = Player;
 })(TimeWaster || (TimeWaster = {}));
 var TimeWaster;
 (function (TimeWaster) {
@@ -86,7 +100,7 @@ var TimeWaster;
             }) || this;
         }
         SceneMain.prototype.preload = function () {
-            //this.load.image("greenBlock", "images/block64.png");
+            this.load.image("greenBlock", "images/block64.png");
         };
         SceneMain.prototype.create = function () {
             console.log("Ready!");
@@ -101,25 +115,5 @@ var TimeWaster;
         return SceneMain;
     }(Phaser.Scene));
     TimeWaster.SceneMain = SceneMain;
-})(TimeWaster || (TimeWaster = {}));
-var TimeWaster;
-(function (TimeWaster) {
-    var Player = /** @class */ (function (_super) {
-        __extends(Player, _super);
-        function Player(scene, x, y, texture, frame) {
-            var _this = _super.call(this, scene, x, y, texture, frame) || this;
-            _this.speed = 5;
-            return _this;
-            //scene.children.add(this);
-        }
-        Player.prototype.update = function (time) {
-            this.MoveUp(time);
-        };
-        Player.prototype.MoveUp = function (time) {
-            this.y = this.y * this.speed * time;
-        };
-        return Player;
-    }(Phaser.GameObjects.Sprite));
-    TimeWaster.Player = Player;
 })(TimeWaster || (TimeWaster = {}));
 //# sourceMappingURL=game.js.map

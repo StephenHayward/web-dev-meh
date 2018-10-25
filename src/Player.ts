@@ -7,9 +7,10 @@
         constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
             super(scene, x, y, texture, frame);
 
-            this.speed = 5;
+            this.speed = 0.005;
 
-            //scene.children.add(this);
+            // Add the object to the scene
+            scene.children.add(this);
         }
 
         update(time) {
@@ -17,7 +18,8 @@
         }
 
         MoveUp(time) {
-            this.y = this.y * this.speed * time;
+            this.y += this.speed * time;
+            console.log(this.y);
         }
     }
 

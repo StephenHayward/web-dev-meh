@@ -13,18 +13,6 @@
                 scene: [MenuScene, SceneMain]
             };
 
-            var preload = function () {
-
-            }
-            var create = function () {
-
-            }
-            var update = function () {
-
-            }
-            // { preload: preload, create:create, update:update }
-
-            // 
             super(config);
         }
 
