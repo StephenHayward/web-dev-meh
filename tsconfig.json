@@ -4,7 +4,7 @@
     "noImplicitAny": false,
     "noEmitOnError": true,
     "removeComments": false,
-    "outFile": "bin/game.js",
+    "outFile": "game.js",
     "outDir": "build/",
     "sourceMap": true
   },
