@@ -19,7 +19,6 @@
 
         MoveUp(time) {
             this.y += this.speed * time;
-            console.log(this.y);
         }
     }
 

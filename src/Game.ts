@@ -10,6 +10,8 @@
                 width: 480,
                 height: 640,
                 parent: 'content',
+                pixelArt: true,
+                zoom: 10,
                 scene: [MenuScene, SceneMain]
             };
 

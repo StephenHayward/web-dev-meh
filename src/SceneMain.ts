@@ -9,7 +9,7 @@
         }
 
         preload() {
-            this.load.image("greenBlock", "images/block64.png");
+            //this.load.multiatlas('cityscene', 'assets/cityscene.json', 'assets');
         }
 
         create() {
