@@ -13,6 +13,35 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var TimeWaster;
 (function (TimeWaster) {
+    var Actor = /** @class */ (function (_super) {
+        __extends(Actor, _super);
+        function Actor(scene, x, y, texture, frame, name) {
+            var _this = _super.call(this, scene, x, y, texture, frame) || this;
+            // Initialize stats;
+            _this.velocity = Phaser.Math.Vector2.ZERO;
+            _this.time = 200;
+            _this.health = 100;
+            // Set the GameObjects name if defined
+            if (name != null && name.length > 0) {
+                _super.prototype.setName.call(_this, name);
+            }
+            _this.setOrigin(.5, .5);
+            // Add the GameObject to the scene
+            scene.children.add(_this);
+            return _this;
+        }
+        Actor.prototype.Update = function (time) {
+            //while (this.velocity.lengthSq() < 100) {
+            this.velocity.x += time;
+            this.angle += time / 100;
+            //}
+        };
+        return Actor;
+    }(Phaser.GameObjects.Sprite));
+    TimeWaster.Actor = Actor;
+})(TimeWaster || (TimeWaster = {}));
+var TimeWaster;
+(function (TimeWaster) {
     var Game = /** @class */ (function (_super) {
         __extends(Game, _super);
         function Game() {
@@ -58,19 +87,23 @@ var TimeWaster;
         MenuScene.prototype.create = function () {
             console.log("Ready!");
             //var gameConfig = this.game.config;
-            var background = this.add.sprite(100, 100, 'dungeonatlas', 'doors_leaf_closed.png');
+            //var background = this.add.sprite(100, 100, 'dungeonatlas', 'doors_leaf_closed.png');
             // Test Animation
-            this.player = new TimeWaster.Player(this, 50, 50, "greenBlock");
-            var elf_f = this.add.sprite(16 * 5, 16 * 5, 'dungeonatlas', 'elf_f_run_anim_f0.png');
+            this.player = new TimeWaster.Player(this, 16 * 5, 16 * 5, 'dungeonatlas', 'elf_f_run_anim_f0.png', 'Player');
             var frameNames = this.anims.generateFrameNames('dungeonatlas', { start: 0, end: 3, zeroPad: 0, prefix: 'elf_f_run_anim_f', suffix: '.png' });
             this.anims.create({ key: 'run', frames: frameNames, frameRate: 10, repeat: -1 });
-            elf_f.anims.play('run');
-            elf_f.flipX = false;
+            this.player.anims.play('run');
+            for (var i = 0; i < this.children.length; i++) {
+                console.log(this.children.getAt(i).name);
+            }
+            //var elf_f = this.add.sprite(16*5, 16*5, 'dungeonatlas', 'elf_f_run_anim_f0.png');
+            //elf_f.anims.play('run');
+            //elf_f.flipX = false;
             //elf_f.setScale(2, 2);
             // Test camera settings
             var camera = this.cameras.cameras[0];
             //camera.centerOn(elf_f.x, elf_f.y);
-            camera.startFollow(elf_f);
+            camera.startFollow(this.player);
             camera.setZoom(2);
             // Test TileMap        
             // Create a blank TileMap
@@ -81,7 +114,7 @@ var TimeWaster;
             layer.putTileAt(15, 5, 5);
         };
         MenuScene.prototype.update = function (time, delta) {
-            this.player.MoveUp(delta);
+            this.player.Update(delta);
         };
         return MenuScene;
     }(Phaser.Scene));
@@ -91,21 +124,14 @@ var TimeWaster;
 (function (TimeWaster) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
-        function Player(scene, x, y, texture, frame) {
-            var _this = _super.call(this, scene, x, y, texture, frame) || this;
-            _this.speed = 0.005;
-            // Add the object to the scene
-            scene.children.add(_this);
-            return _this;
+        function Player(scene, x, y, texture, frame, name) {
+            return _super.call(this, scene, x, y, texture, frame, name) || this;
         }
-        Player.prototype.update = function (time) {
-            this.MoveUp(time);
-        };
-        Player.prototype.MoveUp = function (time) {
-            this.y += this.speed * time;
+        Player.prototype.Update = function (time) {
+            _super.prototype.Update.call(this, time);
         };
         return Player;
-    }(Phaser.GameObjects.Sprite));
+    }(TimeWaster.Actor));
     TimeWaster.Player = Player;
 })(TimeWaster || (TimeWaster = {}));
 var TimeWaster;

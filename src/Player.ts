@@ -1,25 +1,19 @@
 ﻿module TimeWaster {
 
-    export class Player extends Phaser.GameObjects.Sprite {
+    export class Player extends Actor {
 
-        speed: number;
+        constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number, name?: string) {
+            super(scene, x, y, texture, frame, name);
 
-        constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
-            super(scene, x, y, texture, frame);
-
-            this.speed = 0.005;
-
-            // Add the object to the scene
-            scene.children.add(this);
         }
 
-        update(time) {
-            this.MoveUp(time);
+        Update(time: number) {
+            super.Update(time);
+
+            
         }
 
-        MoveUp(time) {
-            this.y += this.speed * time;
-        }
+
     }
 
 }
