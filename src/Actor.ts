@@ -2,7 +2,7 @@
 
     export class Actor extends Phaser.GameObjects.Sprite {
 
-        private velocity: Phaser.Math.Vector2;
+        velocity: Phaser.Math.Vector2;
         private time: number;
         private health: number;
 
@@ -10,7 +10,7 @@
             super(scene, x, y, texture, frame);
 
             // Initialize stats;
-            this.velocity = Phaser.Math.Vector2.ZERO;
+            this.velocity = new Phaser.Math.Vector2();
             this.time = 200;
             this.health = 100;
 
@@ -22,15 +22,12 @@
             this.setOrigin(.5, .5);
 
             // Add the GameObject to the scene
-            scene.children.add(this);
+            scene.add.existing(this);
         }
 
-        Update(time: number) {
-            //while (this.velocity.lengthSq() < 100) {
-                this.velocity.x += time;
-                
-                this.angle += time / 50;
-            //}
+        preUpdate(time: number, delta: number) {
+            this.x += this.velocity.x * delta;
+            this.y += this.velocity.y * delta;
         }
     }
 }

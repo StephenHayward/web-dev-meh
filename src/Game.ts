@@ -3,7 +3,6 @@
     export class Game extends Phaser.Game {
 
         constructor() {
-            var test = new TestClass();
 
             var config = {
                 type: Phaser.AUTO,
@@ -12,13 +11,18 @@
                 parent: 'content',
                 pixelArt: true,
                 zoom: 10,
+                physics: {
+                    default: 'arcade',
+                    arcade: {
+                        debug: true
+                    }
+                },
                 scene: [MenuScene, SceneMain]
             };
 
             super(config);
-        }
 
-        game: Phaser.Game;
+            console.log(this);
+        }   
     } 
-
 }
