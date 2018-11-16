@@ -59,11 +59,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="assets\Dungeon-SpriteAtlas.png" />
-    <Content Include="assets\dungeon-tileset.png" />
+    <Content Include="assets\levels\dungeon-tileset.png" />
     <Content Include="tsconfig.json" />
     <Content Include="assets\Dungeon-SpriteAtlas.json" />
-    <Content Include="assets\dungeon-tileset.json" />
     <Content Include="packages.config" />
+    <Content Include="assets\levels\dungeon-tileset.json" />
+    <Content Include="assets\levels\level01.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -73,7 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.css" />
-    <Content Include="assets\block64.png" />
     <Content Include="index.html" />
     <Content Include="lib\phaser.js" />
     <Content Include="lib\phaser.min.js" />

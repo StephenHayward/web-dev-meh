@@ -10,7 +10,6 @@
                 height: 640,
                 parent: 'content',
                 pixelArt: true,
-                zoom: 10,
                 physics: {
                     default: 'arcade',
                     arcade: {
@@ -21,8 +20,6 @@
             };
 
             super(config);
-
-            console.log(this);
         }   
     } 
 }

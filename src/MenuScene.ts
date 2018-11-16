@@ -4,13 +4,10 @@
 
         constructor() {
             super('MenuScene');
-            console.log(this);
         }
 
         preload() {
-            this.load.image("greenBlock", "assets/block64.png");
-            this.load.multiatlas('dungeonatlas', 'assets/Dungeon-SpriteAtlas.json', 'assets');
-            this.load.image('dungeon-tileset-img', 'assets/dungeon-tileset.png');
+
         }
         
         create() {
@@ -27,10 +24,6 @@
         }
 
         onNewGame() {
-            //for (var i = 0; i < this.plugins.plugins.length; i++) {
-            //    console.log(this.plugins.plugins[i].key);
-            //}
-
             this.scene.start('SceneMain');       
         }
     }

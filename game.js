@@ -18,7 +18,7 @@ var TimeWaster;
         function Actor(scene, x, y, texture, frame, name) {
             var _this = _super.call(this, scene, x, y, texture, frame) || this;
             // Initialize stats;
-            _this.velocity = new Phaser.Math.Vector2();
+            _this.acceleration = new Phaser.Math.Vector2();
             _this.time = 200;
             _this.health = 100;
             // Set the GameObjects name if defined
@@ -26,13 +26,24 @@ var TimeWaster;
                 _super.prototype.setName.call(_this, name);
             }
             _this.setOrigin(.5, .5);
+            // Create colliders
+            scene.physics.add.existing(_this);
+            _this.arcadeBody = _this.body;
+            _this.arcadeBody.maxVelocity = new Phaser.Math.Vector2(30, 30);
+            _this.arcadeBody.setDrag(200, 200);
+            // Debug Text
+            _this.debugText = new Phaser.GameObjects.Text(scene, 0, 0, "Vel: ", { font: '16px Courier', fill: '#ffffff' });
+            _this.debugText.setScale(.3, .3);
+            scene.add.existing(_this.debugText);
             // Add the GameObject to the scene
             scene.add.existing(_this);
             return _this;
         }
         Actor.prototype.preUpdate = function (time, delta) {
-            this.x += this.velocity.x * delta;
-            this.y += this.velocity.y * delta;
+            this.arcadeBody.velocity.x += this.acceleration.x;
+            this.arcadeBody.velocity.y += this.acceleration.y;
+            this.debugText.text = 'Accl: ' + Phaser.Math.RoundTo(this.acceleration.x) + ':' + Phaser.Math.RoundTo(this.acceleration.y);
+            this.debugText.setPosition(this.x, this.y);
         };
         return Actor;
     }(Phaser.GameObjects.Sprite));
@@ -50,7 +61,6 @@ var TimeWaster;
                 height: 640,
                 parent: 'content',
                 pixelArt: true,
-                zoom: 10,
                 physics: {
                     "default": 'arcade',
                     arcade: {
@@ -60,7 +70,6 @@ var TimeWaster;
                 scene: [TimeWaster.MenuScene, TimeWaster.SceneMain]
             };
             _this = _super.call(this, config) || this;
-            console.log(_this);
             return _this;
         }
         return Game;
@@ -72,14 +81,9 @@ var TimeWaster;
     var MenuScene = /** @class */ (function (_super) {
         __extends(MenuScene, _super);
         function MenuScene() {
-            var _this = _super.call(this, 'MenuScene') || this;
-            console.log(_this);
-            return _this;
+            return _super.call(this, 'MenuScene') || this;
         }
         MenuScene.prototype.preload = function () {
-            this.load.image("greenBlock", "assets/block64.png");
-            this.load.multiatlas('dungeonatlas', 'assets/Dungeon-SpriteAtlas.json', 'assets');
-            this.load.image('dungeon-tileset-img', 'assets/dungeon-tileset.png');
         };
         MenuScene.prototype.create = function () {
             var _this = this;
@@ -93,9 +97,6 @@ var TimeWaster;
             _super.prototype.update.call(this, time, delta);
         };
         MenuScene.prototype.onNewGame = function () {
-            //for (var i = 0; i < this.plugins.plugins.length; i++) {
-            //    console.log(this.plugins.plugins[i].key);
-            //}
             this.scene.start('SceneMain');
         };
         return MenuScene;
@@ -126,8 +127,8 @@ var TimeWaster;
             _this.isDisabled = false;
             _this.scene = scene;
             _this.controllingActor = controlling;
-            console.log(_this.controllingActor.name);
             _this.keys = _this.scene.input.keyboard.createCursorKeys();
+            _this.accelerationRate = 3;
             scene.add.existing(_this);
             return _this;
         }
@@ -138,32 +139,33 @@ var TimeWaster;
             }
             // .. Else handle keyboard input            
             if (this.keys.right.isDown) {
-                this.controllingActor.velocity.x = 1;
+                this.controllingActor.acceleration.x += this.accelerationRate;
             }
             else if (this.keys.left.isDown) {
-                this.controllingActor.velocity.x = -1;
+                this.controllingActor.acceleration.x += -this.accelerationRate;
             }
             else {
-                this.controllingActor.velocity.x = 0;
+                this.controllingActor.acceleration.x = 0;
             }
             if (this.keys.down.isDown) {
-                this.controllingActor.velocity.y = 1;
+                this.controllingActor.acceleration.y += this.accelerationRate;
             }
             else if (this.keys.up.isDown) {
-                this.controllingActor.velocity.y = -1;
+                this.controllingActor.acceleration.y += -this.accelerationRate;
             }
             else {
-                this.controllingActor.velocity.y = 0;
+                this.controllingActor.acceleration.y = 0;
             }
+            // Test Changing Character Control
             if (this.keys.space.isDown && this.keys.space.repeats === 1) {
                 var menuScene = this.scene;
                 this.controllingActor = menuScene.enemies[Phaser.Math.Between(0, menuScene.enemies.length - 1)];
             }
+            // Test GameOver
             if (this.keys.shift.isDown) {
                 var menuScene = this.scene;
                 menuScene.onGameOver();
             }
-            //this.controllingActor.x += 50 * delta;
         };
         PlayerController.prototype.setDisabled = function (isDisabled) {
             this.isDisabled = isDisabled;
@@ -177,21 +179,35 @@ var TimeWaster;
     var SceneMain = /** @class */ (function (_super) {
         __extends(SceneMain, _super);
         function SceneMain() {
-            return _super.call(this, 'SceneMain') || this;
+            return _super.call(this, {
+                key: 'SceneMain'
+            }) || this;
         }
         SceneMain.prototype.preload = function () {
-            //this.load.multiatlas('cityscene', 'assets/cityscene.json', 'assets');
+            this.load.multiatlas('dungeonatlas', 'assets/Dungeon-SpriteAtlas.json', 'assets');
+            this.load.image('dungeon-tileset-img', 'assets/levels/dungeon-tileset.png');
+            this.load.tilemapTiledJSON('level01', 'assets/levels/level01.json');
         };
         SceneMain.prototype.create = function () {
             console.log("Ready!");
             this.isGameOver = false;
-            this.player = new TimeWaster.Player(this, this.cameras.cameras[0].displayWidth / 2, this.cameras.cameras[0].displayHeight / 2, 'dungeonatlas', 'elf_f_run_anim_f0.png', 'Player');
+            // Add the map
+            var map = this.add.tilemap('level01');
+            var tileset = map.addTilesetImage('dungeon-tileset', 'dungeon-tileset-img', 16, 16);
+            console.log(map);
+            var floorLayer = map.createStaticLayer('Floor', tileset, 0, 0);
+            var wallLayer = map.createStaticLayer('Walls', tileset, 0, 0);
+            var decoLayer = map.createStaticLayer('WallsDeco', tileset, 0, 0);
+            map.setCollisionBetween(1, 100);
+            // Add Characters
+            this.player = new TimeWaster.Player(this, 16 * 12, 16 * 8, 'dungeonatlas', 'elf_f_run_anim_f0.png', 'Player');
             this.playerController = new TimeWaster.PlayerController(this, this.player);
             this.enemies = new Array();
-            for (var i = 0; i < 5; i++) {
-                var posX = Phaser.Math.Between(0, this.cameras.cameras[0].displayWidth);
-                var posY = Phaser.Math.Between(0, this.cameras.cameras[0].displayHeight);
+            for (var i = 0; i < 3; i++) {
+                var posX = Phaser.Math.Between(10, 13) * 16;
+                var posY = Phaser.Math.Between(5, 10) * 16;
                 var enemy = new TimeWaster.Player(this, posX, posY, 'dungeonatlas', 'elf_f_run_anim_f0.png', 'Enemy' + i);
+                this.physics.add.collider(this.player, enemy);
                 this.enemies.push(enemy);
             }
             //var frameNames = this.anims.generateFrameNames('dungeonatlas', { start: 0, end: 3, zeroPad: 0, prefix: 'elf_f_run_anim_f', suffix: '.png' });
@@ -208,25 +224,27 @@ var TimeWaster;
             // Test camera settings
             var camera = this.cameras.cameras[0];
             //camera.centerOn(elf_f.x, elf_f.y);
-            //camera.startFollow(this.player);
-            //camera.setZoom(2);
-            // Test TileMap        
-            // Create a blank TileMap
-            var map = this.make.tilemap();
-            // Add a tileset
-            var tileset = map.addTilesetImage('dungeon-tileset', 'dungeon-tileset-img', 16, 16);
-            var layer = map.createBlankDynamicLayer('layer1', tileset, 0, 0, 50, 50, 16, 16);
+            camera.startFollow(this.player);
+            camera.setZoom(2);
             //layer.putTileAt(15, 5, 5);
             // Set up collisions
-            //this.physics.add.group()
+            this.physics.add.collider(this.player, wallLayer);
             // Initialize UI
             var camera = this.cameras.cameras[0];
             var screenWidth = camera.displayWidth;
             var screenHeight = camera.displayHeight;
+            // camera.setPosition(16 * 16, 8 * 16);
             var style = { fill: '#0f0' };
             this.gameOver = new Phaser.GameObjects.Text(this, screenWidth / 2, screenHeight / 2, 'GameOver', style);
             this.gameOver.x -= this.gameOver.width / 2;
             this.gameOver.setActive(false);
+            // Debug As Detailed in vlog https://phaser.io/phaser3/devlog/108
+            var debugGraphics = this.add.graphics();
+            map.renderDebug(debugGraphics, {
+                tileColor: new Phaser.Display.Color(105, 210, 231, 200),
+                collidingTileColor: new Phaser.Display.Color(243, 134, 48, 200),
+                faceColor: new Phaser.Display.Color(40, 39, 37, 255)
+            });
         };
         SceneMain.prototype.update = function (time, elapsed) {
             // On game over - begin countdown to scene change
@@ -243,6 +261,9 @@ var TimeWaster;
             this.playerController.setDisabled(true);
             this.countdown = 5 * 1000;
             this.isGameOver = true;
+        };
+        SceneMain.prototype.onCollisionCheck = function () {
+            console.log('Collided');
         };
         return SceneMain;
     }(Phaser.Scene));

@@ -1,12 +1,12 @@
 { "columns":9,
- "image":"dungeon-texture-packer-data.png",
+ "image":"..\/dungeon-tileset.png",
  "imageheight":144,
  "imagewidth":144,
  "margin":0,
  "name":"dungeon-tileset",
  "spacing":0,
  "tilecount":81,
- "tiledversion":"1.2.0",
+ "tiledversion":"1.2.1",
  "tileheight":16,
  "tiles":[
         {
@@ -290,7 +290,7 @@
                      "rotation":0,
                      "type":"",
                      "visible":true,
-                     "width":16,
+                     "width":5.27272727272727,
                      "x":0,
                      "y":0
                     }],
@@ -315,8 +315,8 @@
                      "rotation":0,
                      "type":"",
                      "visible":true,
-                     "width":16,
-                     "x":0,
+                     "width":5.27272727272727,
+                     "x":10.7272727272727,
                      "y":0
                     }],
              "opacity":1,
@@ -776,7 +776,7 @@
                      "rotation":0,
                      "type":"",
                      "visible":true,
-                     "width":16,
+                     "width":5.09090909090909,
                      "x":0,
                      "y":0
                     }],
@@ -801,8 +801,8 @@
                      "rotation":0,
                      "type":"",
                      "visible":true,
-                     "width":16,
-                     "x":0,
+                     "width":5.09090909090909,
+                     "x":10.9090909090909,
                      "y":0
                     }],
              "opacity":1,
@@ -854,31 +854,6 @@
                      "width":16,
                      "x":0,
                      "y":11.875
-                    }],
-             "opacity":1,
-             "type":"objectgroup",
-             "visible":true,
-             "x":0,
-             "y":0
-            }
-        }, 
-        {
-         "id":37,
-         "objectgroup":
-            {
-             "draworder":"index",
-             "name":"",
-             "objects":[
-                    {
-                     "height":16,
-                     "id":1,
-                     "name":"",
-                     "rotation":0,
-                     "type":"",
-                     "visible":true,
-                     "width":16,
-                     "x":0,
-                     "y":0
                     }],
              "opacity":1,
              "type":"objectgroup",
@@ -1063,57 +1038,7 @@
             }
         }, 
         {
-         "id":46,
-         "objectgroup":
-            {
-             "draworder":"index",
-             "name":"",
-             "objects":[
-                    {
-                     "height":16,
-                     "id":1,
-                     "name":"",
-                     "rotation":0,
-                     "type":"",
-                     "visible":true,
-                     "width":16,
-                     "x":0,
-                     "y":0
-                    }],
-             "opacity":1,
-             "type":"objectgroup",
-             "visible":true,
-             "x":0,
-             "y":0
-            }
-        }, 
-        {
          "id":47,
-         "objectgroup":
-            {
-             "draworder":"index",
-             "name":"",
-             "objects":[
-                    {
-                     "height":16,
-                     "id":1,
-                     "name":"",
-                     "rotation":0,
-                     "type":"",
-                     "visible":true,
-                     "width":16,
-                     "x":0,
-                     "y":0
-                    }],
-             "opacity":1,
-             "type":"objectgroup",
-             "visible":true,
-             "x":0,
-             "y":0
-            }
-        }, 
-        {
-         "id":49,
          "objectgroup":
             {
              "draworder":"index",
@@ -1226,56 +1151,6 @@
             }
         }, 
         {
-         "id":57,
-         "objectgroup":
-            {
-             "draworder":"index",
-             "name":"",
-             "objects":[
-                    {
-                     "height":16,
-                     "id":1,
-                     "name":"",
-                     "rotation":0,
-                     "type":"",
-                     "visible":true,
-                     "width":16,
-                     "x":0,
-                     "y":0
-                    }],
-             "opacity":1,
-             "type":"objectgroup",
-             "visible":true,
-             "x":0,
-             "y":0
-            }
-        }, 
-        {
-         "id":58,
-         "objectgroup":
-            {
-             "draworder":"index",
-             "name":"",
-             "objects":[
-                    {
-                     "height":16,
-                     "id":1,
-                     "name":"",
-                     "rotation":0,
-                     "type":"",
-                     "visible":true,
-                     "width":16,
-                     "x":0,
-                     "y":0
-                    }],
-             "opacity":1,
-             "type":"objectgroup",
-             "visible":true,
-             "x":0,
-             "y":0
-            }
-        }, 
-        {
          "id":59,
          "objectgroup":
             {
@@ -1327,31 +1202,6 @@
         }, 
         {
          "id":65,
-         "objectgroup":
-            {
-             "draworder":"index",
-             "name":"",
-             "objects":[
-                    {
-                     "height":16,
-                     "id":1,
-                     "name":"",
-                     "rotation":0,
-                     "type":"",
-                     "visible":true,
-                     "width":16,
-                     "x":0,
-                     "y":0
-                    }],
-             "opacity":1,
-             "type":"objectgroup",
-             "visible":true,
-             "x":0,
-             "y":0
-            }
-        }, 
-        {
-         "id":66,
          "objectgroup":
             {
              "draworder":"index",

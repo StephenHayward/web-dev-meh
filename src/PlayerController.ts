@@ -5,6 +5,7 @@
         scene: Phaser.Scene;
         controllingActor: Actor;
         keys: Phaser.Input.Keyboard.CursorKeys;
+        accelerationRate: number;
 
         isDisabled = false;
 
@@ -13,10 +14,10 @@
 
             this.scene = scene;
             this.controllingActor = controlling;
-
-            console.log(this.controllingActor.name);
-
+             
             this.keys = this.scene.input.keyboard.createCursorKeys();
+
+            this.accelerationRate = 3;
 
             scene.add.existing(this);
         }
@@ -29,36 +30,36 @@
 
             // .. Else handle keyboard input            
             if (this.keys.right.isDown) {
-                this.controllingActor.velocity.x = 1;
+                this.controllingActor.acceleration.x += this.accelerationRate;
             }
             else if (this.keys.left.isDown) {
-                this.controllingActor.velocity.x = -1;
+                this.controllingActor.acceleration.x += -this.accelerationRate;
             }
             else {
-                this.controllingActor.velocity.x = 0;
+                this.controllingActor.acceleration.x = 0;
             }
 
             if (this.keys.down.isDown) {
-                this.controllingActor.velocity.y = 1;
+                this.controllingActor.acceleration.y += this.accelerationRate;
             }
             else if (this.keys.up.isDown) {
-                this.controllingActor.velocity.y = -1;
+                this.controllingActor.acceleration.y += -this.accelerationRate;
             }
             else {
-                this.controllingActor.velocity.y = 0;
+                this.controllingActor.acceleration.y = 0;
             }
 
+            // Test Changing Character Control
             if (this.keys.space.isDown && this.keys.space.repeats === 1) {
                 var menuScene = (this.scene as SceneMain);
                 this.controllingActor = menuScene.enemies[Phaser.Math.Between(0, menuScene.enemies.length - 1)];
             }
 
+            // Test GameOver
             if (this.keys.shift.isDown) {
                 var menuScene = (this.scene as SceneMain);
                 menuScene.onGameOver();
             }
-
-            //this.controllingActor.x += 50 * delta;
         }
 
         setDisabled(isDisabled: boolean) {
